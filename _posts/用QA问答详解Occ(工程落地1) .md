@@ -1,0 +1,44 @@
+# 用QA问答详解Occ(工程落地1)
+
+# Q：Occ在工程落地上对比BEV有什么优缺点
+
+```markdown
+更丰富的3D信息：Occ提供了完整的3D场景表示，包括高度信息，而BEV只是2D俯视图。
+更好的遮挡处理：Occ可以更好地表示和处理遮挡关系，尤其是在复杂场景中。
+更精确的空间感知：Occ能够提供更精确的物体位置和形状信息，有利于后续的3D目标检测和跟踪。
+```
+
+```markdown
+计算复杂度高：Occ需要处理3D体素数据，计算量和内存消耗通常比BEV大。
+实时性挑战：由于计算复杂度高，在实时系统中应用Occ可能面临更大挑战。
+稀疏性问题：3D空间中的大部分区域可能是空的，需要特殊的稀疏表示方法来提高效率。
+标注成本高：相比BEV，Occ数据的标注更复杂，成本更高。
+```
+
+工程落地时，需要根据具体应用场景、硬件条件和性能要求来权衡选择Occ或BEV。在一些要求高精度3D感知的场景中，Occ可能更有优势；而在一些对实时性要求较高或计算资源有限的场景中，BEV可能是更好的选择。
+
+# Q：如何基于LSS范式避免3D conv实现稀疏的Occ预测[FlashOcc]
+
+A：多视角时序图像作为输入。
+
+对于历史帧t-k，经过Backbone提取2D feat，通过Neck进行多尺度特征融合，类似于FPN的操作，将尺寸小的level feat_l上采样对齐feat_l+1，然后cat/conv融合，最后输出单尺度s4的2D feat。
+
+对于当前帧t，同上，经过上述Backbone提取2D feat，Neck融合多尺度特征，最后输出单尺度s4的2D feat。
+
+采用LSS范式生成稀疏BEV feat，其中depth分为两部分，第一部分对编码后对内外参和2D feat作通道注意力，第二部分通过时序多帧之间双目立体视差作深度估计，两部分cat后作为深度信息，然后用BEVDet的decoder生成BEV feat。
+
+时序融合将t-k帧的bev feat作warp与t时刻的BEV feat对齐，然后cat后得到temp BEV feat(单尺度)，然后再经过backbone和neck输出多尺度特征为后续Occ head作准备。
+
+Occ head预测输出BEV 每个网格的语义信息[bs ,dx, dy, num_class✖️dh]，然后类似于yolo操作通过tensor的view得到该voxel的类别是free还是occ的预测结果[bs, dx, dy, dh, num_class]，（dx,dy,dh分别表示voxel的三维尺寸）。
+
+# Q：如何基于BEVFormer范式实现稀疏的Occ预测[SparseOcc]
+
+类似于BEVFormer的query范式，但添加mask sparse sampling使得query变得稀疏。
+
+mask sparse sampling基于2D feat和稀疏重建的3D场景 voxel feat实现，稀疏重建的3D场景 feat用于约束cross attention中query的计算的范围，可以理解为一种优化query的topk的操作。
+
+稀疏重建的3D场景 feat(voxel)是coarse-to-fine的思路。对于第l level (类似于BEVFormer中有l层的Transformer ) 的voxel embedding是由第l-1 level的voxel embedding refine而来，首先l-1 voxel 进行self-attention，然后sample mixing (类似于cross-attention，对于query进行FC求得3D offset，基于此从多尺度的2D feat上采样特征然后用mixing的方式融合)，至此完成第l-1 level voxel embedding的更新。基于此进行上采样将voxel的尺寸由d✖️d变换为ｄ/2✖️d/2 ，然后进行occ score的2分类是否占用的预测，选取topk作为最终第l level的voxel embedding。
+
+在query完成self-attention操作后，进行mask sparse sampling，由mask cross-attention实现，输入为query，2D feat以及mask，其中mask由MLP(query)与voxel embedding进行点乘得到。然后继续mixing和FFN，完成该层Trandformer的occ的预测。
+
+时序融合为了保证稀疏操作，在上述sample mixing中，将3D offset wrap到不同时序帧中进行采样2D feat，然后stack一并进行mixing。
