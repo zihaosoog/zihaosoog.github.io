@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-## About
+## FROM GPT AND ME
 
 Hello there,
 
@@ -20,7 +20,7 @@ Warm regards,
 
 Zihaosoog
 
-## 关于
+## 个性签名
 
 用成长拥抱变化
 
