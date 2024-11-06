@@ -4,14 +4,26 @@ title: About
 permalink: /about/
 ---
 
-## 关于我
+## About
 
-你好，我是翩帆，本科软件工程专业在读。
+Hello there,
 
-这是我基于 GitHub Pages 平台创建的个人博客，用于记录和分享我在技术方面的学习心得与成长收获。
+Welcome to The Box Filled with Openminds and Blogs, a digital sanctuary where thoughts are free to roam, ideas are born, and knowledge is shared. I’m your host on this journey through the fascinating world of autonomous driving technology and the philosophy of life.
+As a practitioner in the field of autonomous driving algorithms, I spend my days crafting the future of transportation—one line of code at a time. I’m passionate about the intersection of technology and human experience, and how we can use innovation to make our lives better.
 
-如果你对我的文章有任何疑问，或者发现文章中存在错误，可以通过邮件与我联系。
+But beyond the world of algorithms and machines, I’m also a 985 life philosopher. I believe in the power of growth and the importance of embracing change. Life is a continuous learning process, and I’m here to document my insights, challenges, and triumphs along the way.
+Join me as I explore the cutting edge of autonomous technology, share practical tips and tricks, and reflect on the broader implications of our ever-evolving world. Whether you’re a tech enthusiast, a fellow philosopher, or simply someone curious about the future, there’s a place for you here.
+
+So, buckle up, and let’s navigate through the complexities of life and technology together. After all, it’s not just about the destination—it’s about the growth we experience along the way.
+
+Warm regards,
+
+Zihaosoog
+
+## 关于
+
+用成长拥抱变化
 
 ## 版权声明
 
-本博客文章都是我的原创文章，版权归我所有，转载请与我联系获得授权许可。
+本博客文章为原创文章，版权归我所有，转载请与我联系获得授权许可。
