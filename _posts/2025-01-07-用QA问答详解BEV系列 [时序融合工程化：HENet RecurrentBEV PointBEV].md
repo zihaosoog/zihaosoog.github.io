@@ -45,3 +45,15 @@ Long-term：输入t-k时刻之前的n个多视角低分辨率时序帧，采用s
 ![image.png](https://zihaosoog.github.io/images/20250107/image1.png)
 
 对上述BEVfeat作时序融合，首先通过warp将不同时间帧feat对齐，然后以 $p^i_t$为中心的window范围内，取2部分点 (key/value) 与 $p^i_t$ (query) 计算attention，其中包括同一时刻window范围内的点 $p^j_t$ 和不同时刻该window范围内的点 $p^m_{t-k}$。
+
+
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  }
+};
+</script>
+<script id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
