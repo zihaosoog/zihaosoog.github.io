@@ -6,6 +6,7 @@ date: 2025-01-07
 tags: [Perception]
 comments: true
 author: zihaosoog
+mathjax: true
 
 ---
 
