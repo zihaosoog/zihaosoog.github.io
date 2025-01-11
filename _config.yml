@@ -17,7 +17,7 @@ paginate: 8
 excerpt_separator: <!-- more -->
 
 footer-links:
-  zhihu: https://www.zhihu.com/people/bei-fang-jiu-shi-ren
+  zhihu: bei-fang-jiu-shi-ren
   email: zacksoog@163.com
   facebook:
   github: zihaosoog
