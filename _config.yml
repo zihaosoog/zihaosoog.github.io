@@ -17,7 +17,7 @@ paginate: 8
 excerpt_separator: <!-- more -->
 
 footer-links:
-  zhihu: 
+  zhihu: https://www.zhihu.com/people/90ccbcc5539fe39ccc6b98a066a7db32
   email: zacksoog@163.com
   facebook:
   github: zihaosoog
