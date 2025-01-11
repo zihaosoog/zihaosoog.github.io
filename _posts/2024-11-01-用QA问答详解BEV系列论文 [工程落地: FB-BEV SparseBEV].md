@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "用QA问答详解BEV系列论文 [工程落地: FB-BEV / SparseBEV]"
+title: "用QA问答详解BEV系列 [工程落地: FB-BEV / SparseBEV]"
 date:   2024-11-01
 tags: [Perception]
 comments: true
